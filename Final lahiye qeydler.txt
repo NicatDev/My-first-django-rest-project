@@ -1,0 +1,61 @@
+Madel 1 - Turlar
+
+- name 
+- description
+- image
+- date
+- wishlist
+- elaqe nomresi
+- emailfield
+- choice field ve ya ayri bir madel seklinde yaradila biler ( dag mese gol ve s) search funksiyasinda istifade oluna biler.
+
+		category - zonalar
+		travel type - camp erazisi
+
+		
+
+		zonalar - (name,description,image)
+		camp erazisi - (name,description,image)
+
+Her turun altinda elaqe bolmesi ve nomre gmail ve s.
+kamp zonalari kamp madeline uygun olacaq. kamp madeli turlarin categori madeli kimi verilecey. camp erazisi de subcategory kimi.
+
+Madel 2 - Kamp levazimatlari
+
+- name 
+- description
+- price
+- discount price
+- image
+- boolen stokda var ya yox
+
+	+ category
+		- elektronik aletler
+			+subcategory
+				- fenerler
+				- 
+		- manqal levazimatlari
+			+subcategory
+				- tilovlar
+				- manqallar
+
+sebete elave et olmalidi. productdan 1 ve ya daha artiq elave edirsen amma basket sehifesine kecid etmir.
+sonra sebete daxil olub her productdan nece dene elave olunub baxib total price ve s olmaqla sifairs et ve tesdiqle.
+ login olunmuyubsa sebete daxil olduqda login sehifesine kecid etsin.
+sebetden sil ve say deyisdirme olsuun
+
+basket(sebet) elave olunmalidi
+
+Madel 3 - Blog
+
+- blog.name
+- description
+- comment 
+- reply
+
+comment login olmayibsa login sehifesine yonlensin. oz commentinde delete olsun
+
+
+travelup
+
+ 
