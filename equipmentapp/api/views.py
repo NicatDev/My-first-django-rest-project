@@ -11,15 +11,15 @@ from rest_framework import filters
 from rest_framework.pagination import LimitOffsetPagination
 from equipmentapp.paginations import CustomPagination
 from equipmentapp.api.permissions import IsOwnerorAdmin
-
-
+from rest_framework.mixins import RetrieveModelMixin
+from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
 
 class ProductListView(generics.ListAPIView):
     serializer_class = ProductSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = ProductFilter
     pagination_class = CustomPagination
-
+    
 
     def get_queryset(self, *args, **kvargs):
         request = self.request
@@ -44,24 +44,23 @@ class ProductRetrieveView(generics.RetrieveAPIView):
     serializer_class = ProductSerializer
     lookup_field = "slug"
 
-
-class ImageView(generics.ListAPIView):
+#imageview
+"""class ImageView(generics.ListAPIView):
     serializer_class = ProductImageSerializer
     qeuryset = ProductImage.objects.all()
 
     def get_queryset(self, *args, **kvargs):
         request = self.request
         queryset = ProductImage.objects.all()
-        return queryset
+        return queryset"""
 
 
+#createupdatedeleteproduct
+""""
 class ProductCreateView(generics.CreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductCreateSerializer
-
-    #useri avto goturur
-    # def perform_create(self, serializer):
-    #    return serializer.save(user=self.request.user)
+    permission_classes = [IsOwnerorAdmin] 
 
     def get(self, request, format=None):
         users = User.objects.all()
@@ -75,23 +74,12 @@ class ProductCreateView(generics.CreateAPIView):
         new_product = serializer.save(user=self.request.user)
         return Response(serializer.data,status=201)
         
-        # yuxarda daha qisa ve cleandi
-        #if serializer.is_valid():
-        #    new_product = serializer.save(user=request.user)
-        #    return Response(serializer.data,status=201)
-        #return Response(status=400)
-
 
 class ProductUpdateView(generics.UpdateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductCreateSerializer
     lookup_field = "slug"
-
-    # def get_object(self):
-    #     slug = self.kwargs.get("slug")
-    #     obj = Product.objects.get(slug=slug)
-    #     return obj
-
+    permission_classes = [IsOwnerorAdmin] 
 
     def put(self, request, *args, **kwargs):
         product = self.get_object()
@@ -105,14 +93,17 @@ class ProductDeleteView(generics.DestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductCreateSerializer
     lookup_field = "slug"
+    permission_classes = [IsOwnerorAdmin] 
     
+"""
     
-
     
 class addbasketview(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = BasketCreateSerializer
     lookup_field = "slug"
     permission_classes = [IsOwnerorAdmin]
+    
+    
     
     def get_queryset(self, *args, **kvargs):
         request = self.request
@@ -122,7 +113,8 @@ class addbasketview(generics.RetrieveUpdateDestroyAPIView):
 
 class BasketListView(generics.ListCreateAPIView):
     serializer_class = BasketSerializer
-
+    permission_classes = [IsAuthenticated]
+    
     def get_queryset(self, *args, **kvargs):
         request = self.request
         queryset = Basket.objects.filter(user=request.user)
