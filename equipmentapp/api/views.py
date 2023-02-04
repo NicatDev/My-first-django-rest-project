@@ -104,12 +104,11 @@ class addbasketview(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsOwnerorAdmin]
     
     
-    
     def get_queryset(self, *args, **kvargs):
         request = self.request
         queryset = Basket.objects.filter(user=request.user)
         return queryset
-
+    
 
 class BasketListView(generics.ListCreateAPIView):
     serializer_class = BasketSerializer

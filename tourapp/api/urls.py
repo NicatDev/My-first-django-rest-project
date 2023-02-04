@@ -7,5 +7,6 @@ app_name = "tourapp-api"
 
 urlpatterns = [
    path('listcreate/',views.FavouriteListCreateAPIView.as_view(), name='listcreate'),
-   path('updatedelete/',views.FavouriteAPIView.as_view, name='updatedelete')
+   path('updatedelete/',views.FavouriteAPIView.as_view(), name='updatedelete'),
+   path('tourlist/',views.TourListView.as_view(), name='TourListView'),
 ]  

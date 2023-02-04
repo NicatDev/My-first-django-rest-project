@@ -69,7 +69,7 @@ class Product(BaseMixin):
 
     def total_price(self):
         discount_price = self.discount_price if self.discount_price else 0
-        return self.price + discount_price
+        return self.price - discount_price
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -97,7 +97,6 @@ class ProductImage(BaseMixin):
         verbose_name = "Product Image"
         verbose_name_plural = "Product Images"
         
-    
 
     def save(self, *args, **kwargs):
         if not self.slug:

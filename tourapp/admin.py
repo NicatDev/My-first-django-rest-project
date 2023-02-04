@@ -7,5 +7,5 @@ from .models import *
 admin.site.register(Type)
 admin.site.register(Category)
 admin.site.register(Tour)
-admin.site.register(ZoneImage)
+admin.site.register(TourImage)
 admin.site.register(Favourite)

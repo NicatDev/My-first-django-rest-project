@@ -16,9 +16,10 @@ class BaseMixin(models.Model):
 
 
 class Category(BaseMixin):
-    name = models.CharField(max_length=300)
-    description = models.TextField(verbose_name="Zona haqqinda")
-
+    name = models.CharField(max_length=300,blank=True,null=True)
+    description = models.TextField(verbose_name="Zona haqqinda",blank=True,null=True)
+    image = models.ImageField(upload_to="media/category",blank=True,null=True)
+    
     def __str__(self):
         return self.name or self.slug
 
@@ -37,21 +38,22 @@ class Category(BaseMixin):
 
 class Type(BaseMixin):
     name = models.CharField(max_length=300)
-    image = models.ImageField(upload_to="media/type")
+    image = models.ImageField(upload_to="media/type",blank=True,null=True)
     
     def __str__(self):
         return self.name or self.slug
 
     class Meta:
         ordering = ("-created_at",)
-        verbose_name = "Erazi"
-        verbose_name_plural = "Eraziler"
+        verbose_name = "Activity"
+        verbose_name_plural = "Activities"
 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = create_slug_shortcode(size=12, model_=Type)
 
         super(Type, self).save(*args, **kwargs)
+
 
 
 class Tour(BaseMixin):
@@ -62,11 +64,11 @@ class Tour(BaseMixin):
         Category, on_delete=models.SET_NULL, blank=True, null=True
     )
     type = models.ForeignKey(Type, on_delete=models.SET_NULL, blank=True, null=True)
-    date = models.DateField(verbose_name="Tur tarixi")
+    date = models.DateField(verbose_name="Tur tarixi",blank=True,null=True)
     # price fields
     price = models.FloatField()
-    email = models.EmailField(verbose_name="mail")
-    image = models.ImageField(upload_to="media/tour",)
+    discount_price = models.FloatField(blank=True, null=True)
+
     
 
     # is_deleted = models.BooleanField(default=False)
@@ -80,11 +82,10 @@ class Tour(BaseMixin):
         verbose_name_plural = "Tours"
 
     def main_product_image(self):
-        product_images = ZoneImage.objects.filter(product=self)
-        if product_images.exists():
-            return product_images.first().image.url
+        tour_images = TourImage.objects.filter(tour=self)
+        if tour_images.exists():
+            return tour_images.first().image.url
         return "-"
-
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -97,12 +98,12 @@ def upload_to(instance, filename):
     return "%s/%s/%s" % ("category", instance.product.name, filename)
 
 
-class ZoneImage(BaseMixin):
-    zona = models.ForeignKey(Category, on_delete=models.CASCADE)
+class TourImage(BaseMixin):
+    tour = models.ForeignKey(Tour, on_delete=models.CASCADE,related_name='images')
     image = models.ImageField(upload_to=upload_to)
 
     def __str__(self):
-        return self.product.name or self.slug
+        return self.tour.name or self.slug
 
     class Meta:
         ordering = ("-created_at",)
@@ -111,16 +112,18 @@ class ZoneImage(BaseMixin):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = create_slug_shortcode(size=12, model_=ZoneImage)
+            self.slug = create_slug_shortcode(size=12, model_=TourImage)
 
-        super(ZoneImage, self).save(*args, **kwargs)
+        super(TourImage, self).save(*args, **kwargs)
 
 class Favourite(BaseMixin):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     tour = models.ForeignKey(Tour, on_delete=models.CASCADE)
-    content = models.CharField(max_length=120)
+
+    # CONTENT SILINSIN
     
     def __str__(self):
         return self.user.username
     
+ 
  
