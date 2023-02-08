@@ -95,7 +95,7 @@ class Tour(BaseMixin):
 
 
 def upload_to(instance, filename):
-    return "%s/%s/%s" % ("category", instance.product.name, filename)
+    return "%s/%s/%s" % ("category", instance.tour.name, filename)
 
 
 class TourImage(BaseMixin):
