@@ -27,7 +27,7 @@ class ProductListView(generics.ListAPIView):
         category = request.GET.get("category", None)
         search = request.GET.get("search", None)
         if category:
-            queryset = queryset.filter(subcategory__category__id=int(category))
+            queryset = queryset.filter(category__id=int(category))
         return queryset
     
     def get_serializer_class(self):

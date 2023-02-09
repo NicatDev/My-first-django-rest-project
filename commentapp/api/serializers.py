@@ -1,6 +1,6 @@
 from rest_framework.serializers import SerializerMethodField,ModelSerializer
 from rest_framework import serializers
-from commentapp.models import Comment
+from commentapp.models import Comment,Blog
 from django.contrib.auth.models import User
 from equipmentapp.models import Product
 
@@ -33,10 +33,13 @@ class ProductSerializer(ModelSerializer):
         fields = ['name','id','slug']
         
 
+class BlogSerializer(ModelSerializer):
+    class Meta:
+        model = Blog
+        fields = '__all__'
 
 #Ic ice reply olmasi ucun yuxardaki childi yox get_repliesde self serializer istifade etdim.
 class CommentListSerializer(ModelSerializer):
-    replies = SerializerMethodField()
     user = UserSerializer()
     product = ProductSerializer()
     class Meta:
@@ -44,9 +47,7 @@ class CommentListSerializer(ModelSerializer):
         fields = '__all__'
         #depth = 1 foreignkeyle baglanan modellerin butun fieldlerin getirdiyi ucun basqa metod istifade etdim
     
-    def get_replies(self, obj):
-        if obj.any_children:
-            return CommentListSerializer(obj.children(),many=True).data
+
 
 
 class CommentDeleteUpdateSerializer(ModelSerializer):

@@ -1,6 +1,6 @@
 from rest_framework.generics import RetrieveAPIView,UpdateAPIView,ListAPIView,CreateAPIView,DestroyAPIView
 from commentapp.api.serializers import *
-from commentapp.models import Comment
+from commentapp.models import Comment,Blog
 from commentapp.api.permissions import IsOwnerorAdmin
 from equipmentapp.paginations import CustomPagination
 from rest_framework.mixins import RetrieveModelMixin
@@ -18,13 +18,13 @@ class CommentCreateAPIView(CreateAPIView):
 class CommentListAPIView(ListAPIView):
     serializer_class = CommentListSerializer
     pagination_class = CustomPagination
+    queryset = Comment.objects.all()
     
-    def get_queryset(self):
-        queryset = Comment.objects.filter(parent = None)
-        query = self.request.GET.get("q")
-        if query:
-            queryset = queryset.filter(product = query)
-        return queryset
+class BlogListAPIView(ListAPIView):
+    serializer_class = BlogSerializer
+    pagination_class = CustomPagination
+    queryset = Blog.objects.all()
+    
 
 
 #retrievemodelmixin destroyapiview-a get ozelliyi verir
