@@ -9,4 +9,6 @@ urlpatterns = [
    path("delete/<slug>/",views.CommentDeleteAPIView.as_view(), name="delete"),
    path("update/<slug>/",views.CommentUpdateAPIView.as_view(), name="update"),
    path("blog/",views.BlogListAPIView.as_view(), name="blog"),
+   path("blogdetail/<id>/",views.BlogDetailAPIView.as_view(), name="blogdetail"),
+
 ]  

@@ -26,6 +26,12 @@ class BlogListAPIView(ListAPIView):
     queryset = Blog.objects.all()
     
 
+class BlogDetailAPIView(RetrieveAPIView):
+    serializer_class = BlogSerializer
+    pagination_class = CustomPagination
+    queryset = Blog.objects.all()
+    lookup_field = 'id'
+
 
 #retrievemodelmixin destroyapiview-a get ozelliyi verir
 class CommentDeleteAPIView(DestroyAPIView,RetrieveModelMixin):

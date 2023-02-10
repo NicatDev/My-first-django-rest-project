@@ -4,6 +4,23 @@ from accountapp.utils import create_slug_shortcode
 from equipmentapp.models import *
 from django.contrib.auth.models import User
 
+class Category(BaseMixin):
+    name = models.CharField(max_length=300,blank=True,null=True)
+
+    
+    def __str__(self):
+        return self.name or self.slug
+
+    class Meta:
+        ordering = ("-created_at",)
+        verbose_name = "Blog movzusu"
+        verbose_name_plural = "Blog movzulari"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = create_slug_shortcode(size=12, model_=Category)
+
+        super(Category, self).save(*args, **kwargs)
 
 
 class Blog(BaseMixin):
@@ -11,7 +28,7 @@ class Blog(BaseMixin):
     description = models.TextField(blank=True, null=True)
     deleted = models.BooleanField(default=False)
     image = models.ImageField(upload_to='blogimage/')
-
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL,null=True,blank=True)
     
     def __str__(self):
         return self.name or self.slug
@@ -32,7 +49,7 @@ class Blog(BaseMixin):
 
 # Create your models here.
 class Comment(BaseMixin):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=False, blank=False,related_name='product')
+    Blog = models.ForeignKey(Blog, on_delete=models.CASCADE,related_name='product',null=True,blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField(max_length=1000)   
 

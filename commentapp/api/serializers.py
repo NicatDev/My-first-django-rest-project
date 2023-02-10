@@ -38,6 +38,8 @@ class BlogSerializer(ModelSerializer):
         model = Blog
         fields = '__all__'
 
+
+
 #Ic ice reply olmasi ucun yuxardaki childi yox get_repliesde self serializer istifade etdim.
 class CommentListSerializer(ModelSerializer):
     user = UserSerializer()
