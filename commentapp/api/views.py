@@ -37,7 +37,7 @@ class BlogDetailAPIView(RetrieveAPIView):
 class CommentDeleteAPIView(DestroyAPIView,RetrieveModelMixin):
     serializer_class = CommentDeleteUpdateSerializer
     queryset = Comment.objects.all()
-    lookup_field = 'slug'
+    lookup_field = 'id'
     permission_classes = [IsOwnerorAdmin]  
     #model mixin ucun get funksiyasi
     def get(self, request, *args, **kwargs):
@@ -49,7 +49,7 @@ class CommentDeleteAPIView(DestroyAPIView,RetrieveModelMixin):
 class CommentUpdateAPIView(UpdateAPIView,RetrieveModelMixin):
     serializer_class = CommentDeleteUpdateSerializer
     queryset = Comment.objects.all()
-    lookup_field = 'slug'
+    lookup_field = 'id'
     permission_classes = [IsOwnerorAdmin]
     
     def get(self, request, *args, **kwargs):

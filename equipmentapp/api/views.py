@@ -42,7 +42,7 @@ class ProductListView(generics.ListAPIView):
 class ProductRetrieveView(generics.RetrieveAPIView):
     queryset=Product.objects.all()
     serializer_class = ProductSerializer
-    lookup_field = "slug"
+    lookup_field = "id"
 
 #imageview
 """class ImageView(generics.ListAPIView):
@@ -100,7 +100,7 @@ class ProductDeleteView(generics.DestroyAPIView):
     
 class addbasketview(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = BasketCreateSerializer
-    lookup_field = "slug"
+    lookup_field = "id"
     permission_classes = [IsOwnerorAdmin]
     
     
