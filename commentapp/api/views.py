@@ -1,6 +1,6 @@
 from rest_framework.generics import RetrieveAPIView,UpdateAPIView,ListAPIView,CreateAPIView,DestroyAPIView
 from commentapp.api.serializers import *
-from commentapp.models import Comment
+from commentapp.models import Comment,Blog
 from commentapp.api.permissions import IsOwnerorAdmin
 from equipmentapp.paginations import CustomPagination
 from rest_framework.mixins import RetrieveModelMixin
@@ -18,20 +18,26 @@ class CommentCreateAPIView(CreateAPIView):
 class CommentListAPIView(ListAPIView):
     serializer_class = CommentListSerializer
     pagination_class = CustomPagination
+    queryset = Comment.objects.all()
     
-    def get_queryset(self):
-        queryset = Comment.objects.filter(parent = None)
-        query = self.request.GET.get("q")
-        if query:
-            queryset = queryset.filter(product = query)
-        return queryset
+class BlogListAPIView(ListAPIView):
+    serializer_class = BlogSerializer
+    pagination_class = CustomPagination
+    queryset = Blog.objects.all()
+    
+
+class BlogDetailAPIView(RetrieveAPIView):
+    serializer_class = BlogSerializer
+    pagination_class = CustomPagination
+    queryset = Blog.objects.all()
+    lookup_field = 'id'
 
 
 #retrievemodelmixin destroyapiview-a get ozelliyi verir
 class CommentDeleteAPIView(DestroyAPIView,RetrieveModelMixin):
     serializer_class = CommentDeleteUpdateSerializer
     queryset = Comment.objects.all()
-    lookup_field = 'slug'
+    lookup_field = 'id'
     permission_classes = [IsOwnerorAdmin]  
     #model mixin ucun get funksiyasi
     def get(self, request, *args, **kwargs):
@@ -43,7 +49,7 @@ class CommentDeleteAPIView(DestroyAPIView,RetrieveModelMixin):
 class CommentUpdateAPIView(UpdateAPIView,RetrieveModelMixin):
     serializer_class = CommentDeleteUpdateSerializer
     queryset = Comment.objects.all()
-    lookup_field = 'slug'
+    lookup_field = 'id'
     permission_classes = [IsOwnerorAdmin]
     
     def get(self, request, *args, **kwargs):

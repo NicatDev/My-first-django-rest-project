@@ -52,7 +52,7 @@ class FavouriteListCreateAPIView(ListCreateAPIView):
 class FavouriteAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Favourite.objects.all()
     serializer_class = FavouriteAPISerializer
-    lookup_field = 'slug'
+    lookup_field = 'id'
     permission_classes = [IsOwnerorAdmin]
     
     

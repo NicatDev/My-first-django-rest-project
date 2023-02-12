@@ -63,6 +63,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 ]
 
+<<<<<<< HEAD
 # CORS_ALLOWED_ORIGINS = ["http://localhost:5174",]
 CORS_ORIGIN_ALLOW_ALL = True
 CSRF_TRUSTED_ORIGINS = [
@@ -86,6 +87,11 @@ CORS_ALLOW_HEADERS = [
     "user-agent",
     "x-csrftoken",
     "x-requested-with",
+=======
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+
+>>>>>>> my-back-up
 ]
 ROOT_URLCONF = 'final.urls'
 

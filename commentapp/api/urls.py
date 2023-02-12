@@ -5,8 +5,10 @@ app_name = "commentapp-api"
 
 urlpatterns = [
    path("create/",views.CommentCreateAPIView.as_view(), name="create"),
-   path("list/",views.CommentListAPIView.as_view(), name="list"),
-   path("delete/<slug>/",views.CommentDeleteAPIView.as_view(), name="delete"),
-   path("update/<slug>/",views.CommentUpdateAPIView.as_view(), name="update"),
+   path("comment/",views.CommentListAPIView.as_view(), name="comment"),
+   path("delete/<id>/",views.CommentDeleteAPIView.as_view(), name="delete"),
+   path("update/<id>/",views.CommentUpdateAPIView.as_view(), name="update"),
+   path("blog/",views.BlogListAPIView.as_view(), name="blog"),
+   path("blogdetail/<id>/",views.BlogDetailAPIView.as_view(), name="blogdetail"),
 
 ]  

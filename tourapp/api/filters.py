@@ -8,7 +8,11 @@ class TourFilter(django_filters.FilterSet):
     type__id = django_filters.CharFilter(lookup_expr='iexact')
     name = django_filters.CharFilter(lookup_expr='icontains')
     description = django_filters.CharFilter(lookup_expr='icontains')
+<<<<<<< HEAD
     date = django_filters.DateFromToRangeFilter()         
+=======
+    date = django_filters.DateFromToRangeFilter()
+>>>>>>> my-back-up
     date__id = django_filters.CharFilter(lookup_expr='iexact')                
                                         
     class Meta:
