@@ -19,8 +19,10 @@ class ProductListView(generics.ListAPIView):
     filter_backends = (DjangoFilterBackend,)
     filterset_class = ProductFilter
     pagination_class = CustomPagination
-    
+    queryset = Product.objects.all()
 
+
+    """
     def get_queryset(self, *args, **kvargs):
         request = self.request
         queryset = Product.objects.all()
@@ -36,7 +38,7 @@ class ProductListView(generics.ListAPIView):
         return ProductCreateSerializer
     
     def perform_create(self, serializer):
-        return serializer.save(user=self.request.user)
+        return serializer.save(user=self.request.user)"""
 
 #detailview
 class ProductRetrieveView(generics.RetrieveAPIView):

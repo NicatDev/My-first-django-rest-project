@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from equipmentapp.models import *
-
+from commentapp.api.serializers import *
 class ProductImageSerializer(serializers.ModelSerializer):
     
     class Meta:
@@ -20,12 +20,15 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+
         
 class ProductSerializer(serializers.ModelSerializer):
     total_price = serializers.SerializerMethodField()
     category = CategorySerializer()
     images = ProductImageSerializer(many=True)
     main_product_image = serializers.SerializerMethodField()
+    numberofcomments = serializers.SerializerMethodField()
+    comment = CommentListSerializer(many=True)
 
     class Meta:
         model = Product
@@ -38,9 +41,12 @@ class ProductSerializer(serializers.ModelSerializer):
     def get_main_product_image(self,obj):
         request = self.context.get("request")
         return request.build_absolute_uri(obj.main_product_image())
- 
-        
     
+    def get_numberofcomments(self,obj):
+        return len(obj.comment.all())
+        
+
+
 class ProductCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product

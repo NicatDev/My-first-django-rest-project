@@ -25,6 +25,7 @@ class TourSerializer(serializers.ModelSerializer):
     main_product_image = serializers.SerializerMethodField()
     type = TypeSerializer()
 
+
     class Meta:
         model = Tour
         fields = "__all__"
@@ -36,6 +37,7 @@ class TourSerializer(serializers.ModelSerializer):
     def get_main_product_image(self,obj):
         request = self.context.get("request")
         return request.build_absolute_uri(obj.main_product_image())
+
 
 class FavouriteListCreateAPISerializer(ModelSerializer):
     class Meta:
@@ -54,3 +56,5 @@ class FavouriteAPISerializer(ModelSerializer):
         model=Favourite
         fields = ['content']
         
+
+  

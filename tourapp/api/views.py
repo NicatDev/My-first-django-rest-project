@@ -8,18 +8,20 @@ from rest_framework import generics
 from django_filters.rest_framework import DjangoFilterBackend
 from tourapp.api.filters import *
 
+
 class TourListView(generics.ListAPIView):
-    serializer_class = TourSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = TourFilter
+    serializer_class = TourSerializer
     pagination_class = CustomPagination
-    
+    queryset = Tour.objects.all()
 
+"""
     def get_queryset(self, *args, **kvargs):
         request = self.request
         queryset = Tour.objects.all()
         category = request.GET.get("category", None)
-        type = request.GET.get("type", None)
+
         date = request.GET.get("date", None)
         search = request.GET.get("search", None)
         if category:
@@ -31,12 +33,19 @@ class TourListView(generics.ListAPIView):
         if date:
             queryset = queryset.filter(date__id=int(date))
         
+        if search:
+            queryset = queryset.filter(description=search)
+        
             
-        return queryset 
+        return queryset """
     
+"""    def get_serializer_class(self):
+        if self.request.method == "GET":
+            return TourSerializer
+
 
     def perform_create(self, serializer):
-        return serializer.save(user=self.request.user)
+        return serializer.save(user=self.request.user)"""
 
 
 class FavouriteListCreateAPIView(ListCreateAPIView):
@@ -55,4 +64,8 @@ class FavouriteAPIView(RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
     permission_classes = [IsOwnerorAdmin]
     
-    
+
+class TourListDetailView(generics.RetrieveAPIView):
+    serializer_class = TourSerializer
+    queryset=Tour.objects.all()
+    lookup_field = "id"

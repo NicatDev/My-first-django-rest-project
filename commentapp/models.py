@@ -3,6 +3,7 @@ from django.db import models
 from accountapp.utils import create_slug_shortcode
 from equipmentapp.models import *
 from django.contrib.auth.models import User
+from tourapp.models import *
 
 class Category(BaseMixin):
     name = models.CharField(max_length=300,blank=True,null=True)
@@ -49,13 +50,15 @@ class Blog(BaseMixin):
 
 # Create your models here.
 class Comment(BaseMixin):
-    Blog = models.ForeignKey(Blog, on_delete=models.CASCADE,related_name='product',null=True,blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = models.TextField(max_length=1000)   
-
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,related_name='comment',null=True,blank=True)
+    tour = models.ForeignKey(Tour, on_delete=models.CASCADE,related_name='comment',null=True,blank=True)
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE,related_name='comment',null=True,blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True,blank=True)
+    content = models.TextField(max_length=1000,null=True,blank=True)   
+    rating = models.IntegerField(null=True,blank=True)
     
     def __str__(self):
-        return self.product.name + ' - ' + self.user.username + ' - ' + self.content[0:10]
+        return self.content[0:10]
 
     class Meta:
         ordering = ("-created_at",)

@@ -24,6 +24,7 @@ class LoginView(generics.CreateAPIView):
         password = serializer.data.get("password")
 
         user = authenticate(username=username, password=password)
+        id = user.id
         print(user)
         login(request, user)
 
@@ -33,7 +34,7 @@ class LoginView(generics.CreateAPIView):
             "access": str(refresh.access_token)
         }
 
-        return Response({"username": username, "tokens": tokens}, status=200)
+        return Response({"username": username,'id':user.id, "tokens": tokens}, status=200)
 
 
 
