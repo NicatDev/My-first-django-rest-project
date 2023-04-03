@@ -67,6 +67,7 @@ class ProductCommentCreateSerializer(ModelSerializer):
     def create(self,validate_data):
         productid = validate_data.pop("product")
         userid = validate_data.pop("user")
+
         comment = Comment.objects.create(product=productid,user=userid,**validate_data)
                 #validate_data.blog = blogid
         comment.save()

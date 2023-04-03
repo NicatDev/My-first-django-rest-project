@@ -2,6 +2,7 @@ from rest_framework.serializers import SerializerMethodField,ModelSerializer
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from tourapp.models import *
+from commentapp.api.serializers import CommentListSerializer
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,6 +25,7 @@ class TourSerializer(serializers.ModelSerializer):
     images = TourImageSerializer(many=True)
     main_product_image = serializers.SerializerMethodField()
     type = TypeSerializer()
+    comment = CommentListSerializer(many=True)
 
 
     class Meta:
