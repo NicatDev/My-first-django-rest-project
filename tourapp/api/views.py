@@ -8,11 +8,18 @@ from rest_framework import generics
 from django_filters.rest_framework import DjangoFilterBackend
 from tourapp.api.filters import *
 
+
 class DestinationListView(generics.ListAPIView):
     serializer_class = CategorySerializer
     pagination_class = CustomPagination
     queryset = Category.objects.all()
-
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = CateogryFilter
+    
+class DestinationRetrieveView(generics.RetrieveAPIView):
+    serializer_class = CategorySerializer
+    queryset=Category.objects.all()
+    lookup_field = "id"
 
 class TourListView(generics.ListAPIView):
     filter_backends = (DjangoFilterBackend,)

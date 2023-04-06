@@ -10,5 +10,6 @@ urlpatterns = [
    path('updatedelete/<id>/',views.FavouriteAPIView.as_view(), name='updatedelete'),
    path('tourlist/',views.TourListView.as_view(), name='TourListView'),
    path('DestinationList/',views.DestinationListView.as_view(), name='DestinationListView'),
+   path('DestinationRetrieve/',views.DestinationRetrieveView.as_view(), name='DestinationRetrieveView'),
    path('tour/<id>/',views.TourListDetailView.as_view(), name='TourListView'),
 ]  

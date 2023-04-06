@@ -10,10 +10,15 @@ class TourFilter(django_filters.FilterSet):
     description = django_filters.CharFilter(lookup_expr='icontains')
 
     date = django_filters.DateFromToRangeFilter()         
-
-
-              
-                                        
+                           
     class Meta:
         model = Tour
         fields = ['category', "category__id",'type','type__id','type__name', "category__name","name","description",'date']
+        
+        
+class CateogryFilter(django_filters.FilterSet):
+    name = django_filters.CharFilter(lookup_expr='icontains')
+       
+    class Meta:
+        model = Tour
+        fields = ['name']
