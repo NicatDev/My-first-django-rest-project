@@ -20,5 +20,5 @@ class CateogryFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(lookup_expr='icontains')
        
     class Meta:
-        model = Tour
+        model = Category
         fields = ['name']
