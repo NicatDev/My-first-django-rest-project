@@ -3,6 +3,8 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from tourapp.models import *
 from commentapp.api.serializers import CommentListSerializer
+from django.core.mail import send_mail
+from django.conf import settings
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -58,5 +60,14 @@ class FavouriteAPISerializer(ModelSerializer):
         model=Favourite
         fields = ['content']
         
+class BookmarkSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length=150)
+    email = serializers.EmailField()
+    surname = serializers.CharField(max_length=150)
+    phone = serializers.IntegerField()
+    num_tickets = serializers.IntegerField()
+    
 
+        
+    
   

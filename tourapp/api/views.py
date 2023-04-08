@@ -7,6 +7,8 @@ from tourapp.api.permissions import IsOwnerorAdmin
 from rest_framework import generics
 from django_filters.rest_framework import DjangoFilterBackend
 from tourapp.api.filters import *
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 
 class DestinationListView(generics.ListAPIView):
@@ -81,3 +83,24 @@ class TourListDetailView(generics.RetrieveAPIView):
     serializer_class = TourSerializer
     queryset=Tour.objects.all()
     lookup_field = "id"
+    
+class BookMarkView(APIView):
+    
+   def post(self, request):
+        serializer = BookmarkSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            name = request.data.get('name')
+            surname = request.data.get('surname')
+            email = request.data.get('email')
+            phone = request.data.get('phone')
+            num_tickets = request.data.get('num_tickets')
+            
+            send_mail(
+                'Tur muracietiniz tesdiqlendi !',
+                f'Hormetli {name} {surname} sizin turla bali muracietiniz AzKamp sirketi terefinden tesdiqlendi. Sizin ucun qeyd etdiyiiniz tura {num_tickets} bilet ayrilmisdir.Emekdaslarimiz tur tarixi yaxinlasdiqda {phone} nomresi ile elaqe saxlayacaq',
+                settings.EMAIL_HOST_USER,
+                [email],
+                fail_silently=False,
+            )
+            return Response({'message':'success'})

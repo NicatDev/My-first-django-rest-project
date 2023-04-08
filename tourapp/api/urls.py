@@ -12,4 +12,5 @@ urlpatterns = [
    path('DestinationList/',views.DestinationListView.as_view(), name='DestinationListView'),
    path('DestinationRetrieve/<id>/',views.DestinationRetrieveView.as_view(), name='DestinationRetrieveView'),
    path('tour/<id>/',views.TourListDetailView.as_view(), name='TourListView'),
+   path('BookMark/',views.BookMarkView.as_view(), name='BookMarkView'),
 ]  
