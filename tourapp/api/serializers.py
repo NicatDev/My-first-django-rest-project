@@ -33,10 +33,40 @@ class TourSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tour
         fields = "__all__"
+    
+    def get_total_price(self, obj):
+        try:
+            discount_price = obj.discount_price if obj.discount_price else 0
+            return obj.price - discount_price
+        except:
+            return 'undefined'
+    
+    def get_main_product_image(self,obj):
+        request = self.context.get("request")
+        return request.build_absolute_uri(obj.main_product_image())     
+        
+class TourAddSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tour
+        fields = '__all__'       
+        
+        
+class myTourSerializer(serializers.ModelSerializer):
+    total_price = serializers.SerializerMethodField()
+    images = TourImageSerializer(many=True)
+    main_product_image = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Tour
+        fields = "__all__"
 
     def get_total_price(self, obj):
-        discount_price = obj.discount_price if obj.discount_price else 0
-        return obj.price - discount_price
+        try:
+            discount_price = obj.discount_price if obj.discount_price else 0
+            return obj.price - discount_price
+        except:
+            return 'undefined'
     
     def get_main_product_image(self,obj):
         request = self.context.get("request")
@@ -60,12 +90,10 @@ class FavouriteAPISerializer(ModelSerializer):
         model=Favourite
         fields = ['content']
         
-class BookmarkSerializer(serializers.Serializer):
-    name = serializers.CharField(max_length=150)
-    email = serializers.EmailField()
-    surname = serializers.CharField(max_length=150)
-    phone = serializers.IntegerField()
-    num_tickets = serializers.IntegerField()
+class BookmarkSerializer(ModelSerializer):
+    class Meta:
+        model = TourMessages
+        fields = '__all__'
     
 
         

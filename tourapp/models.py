@@ -67,8 +67,8 @@ class Tour(BaseMixin):
     type = models.ForeignKey(Type, on_delete=models.SET_NULL, blank=True, null=True)
     date = models.DateField(verbose_name="Tur tarixi",blank=True,null=True)
     # price fields
-    price = models.FloatField()
-    discount_price = models.FloatField(blank=True, null=True)
+    price = models.FloatField(null=True,blank=True)
+    discount_price = models.FloatField(blank=True, null=True,default=0)
 
     
 
@@ -94,7 +94,17 @@ class Tour(BaseMixin):
 
         super(Tour, self).save(*args, **kwargs)
 
-
+class TourMessages(models.Model):
+    tour = models.ForeignKey(Tour,on_delete=models.CASCADE)
+    name = models.CharField(max_length=120,blank=True,null=True)
+    surname = models.CharField(max_length=120,blank=True,null=True)
+    email = models.EmailField(blank=True,null=True)
+    phone = models.CharField(max_length=120,blank=True,null=True)
+    num_tickets = models.PositiveSmallIntegerField(blank=True,null=True)
+    
+    def __str__(self):
+        return self.name
+      
 def upload_to(instance, filename):
     return "%s/%s/%s" % ("category", instance.tour.name, filename)
 

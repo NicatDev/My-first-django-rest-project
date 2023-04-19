@@ -95,7 +95,7 @@ class BookMarkView(APIView):
             email = request.data.get('email')
             phone = request.data.get('phone')
             num_tickets = request.data.get('num_tickets')
-            
+            serializer.save()
             send_mail(
                 'Tur muracietiniz tesdiqlendi !',
                 f'Hormetli {name} {surname} sizin turla bali muracietiniz AzKamp sirketi terefinden tesdiqlendi. Sizin ucun qeyd etdiyiiniz tura {num_tickets} bilet ayrilmisdir.Emekdaslarimiz tur tarixi yaxinlasdiqda {phone} nomresi ile elaqe saxlayacaq',
@@ -104,3 +104,6 @@ class BookMarkView(APIView):
                 fail_silently=False,
             )
             return Response({'message':'success'})
+        
+        else:
+            return Response({'error':serializer.errors})

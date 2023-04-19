@@ -12,6 +12,11 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ("username", 'first_name','email')
         
+class UserForUserPageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('last_name','id', 'first_name','email')
+        
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(style={"input_type": "password"})
@@ -75,8 +80,11 @@ class RegistrationSerializer(serializers.ModelSerializer):
         return user
 
 
+from tourapp.models import TourMessages
 
-
-    
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TourMessages
+        fields = '__all__'
     
     
