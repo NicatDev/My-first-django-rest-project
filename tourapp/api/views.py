@@ -96,6 +96,7 @@ class BookMarkView(APIView):
             phone = request.data.get('phone')
             num_tickets = request.data.get('num_tickets')
             serializer.save()
+            print('oke')
             send_mail(
                 'Tur muracietiniz tesdiqlendi !',
                 f'Hormetli {name} {surname} sizin turla bali muracietiniz AzKamp sirketi terefinden tesdiqlendi. Sizin ucun qeyd etdiyiiniz tura {num_tickets} bilet ayrilmisdir.Emekdaslarimiz tur tarixi yaxinlasdiqda {phone} nomresi ile elaqe saxlayacaq',
@@ -103,7 +104,17 @@ class BookMarkView(APIView):
                 [email],
                 fail_silently=False,
             )
+            print('okeee')
             return Response({'message':'success'})
         
         else:
             return Response({'error':serializer.errors})
+        
+
+class CategoryTourView(generics.ListAPIView):
+    serializer_class = CategorySerializer
+    queryset=Category.objects.all()
+
+class TypeTourView(generics.ListAPIView):
+    serializer_class = TypeSerializer
+    queryset=Type.objects.all()

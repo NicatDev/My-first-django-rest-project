@@ -17,9 +17,13 @@ class UserSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = "__all__"
+        fields = ('name','id')
 
-
+class CategoryySerializer(serializers.ModelSerializer):
+    image = serializers.ImageField( use_url=True)
+    class Meta:
+        model = Category
+        fields = '__all__'
 
         
 class ProductSerializer(serializers.ModelSerializer):

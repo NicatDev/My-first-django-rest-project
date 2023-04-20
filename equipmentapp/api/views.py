@@ -21,6 +21,9 @@ class ProductListView(generics.ListAPIView):
     pagination_class = CustomPagination
     queryset = Product.objects.all()
 
+class CategoryListView(generics.ListAPIView):
+    serializer_class = CategoryySerializer
+    queryset = Category.objects.all()
 
     """
     def get_queryset(self, *args, **kvargs):

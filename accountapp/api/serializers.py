@@ -86,5 +86,23 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = TourMessages
         fields = '__all__'
+
+class ContactUsSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length=120)
+    email = serializers.EmailField()
+    message = serializers.CharField(max_length=120)
     
-    
+    def create(self,instance):
+        name = instance.get('name')
+        message = instance.get('message')
+        email = instance.get('email')
+       
+        send_mail(
+            'Size Azkampdan bildiris var !',
+            f'Hormetli {name} bey/xanim! Sizin mektubunuz ugurla qebul edildi ve tezlikle cavablandirilacaqdir !',
+            settings.EMAIL_HOST_USER,
+            [email],
+            fail_silently=False,
+        )
+        return {'as':'as'}
+        

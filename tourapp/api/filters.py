@@ -9,7 +9,7 @@ class TourFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(lookup_expr='icontains')
     description = django_filters.CharFilter(lookup_expr='icontains')
 
-    date = django_filters.DateFromToRangeFilter()         
+    date = django_filters.DateFilter()     
                            
     class Meta:
         model = Tour
@@ -22,3 +22,4 @@ class CateogryFilter(django_filters.FilterSet):
     class Meta:
         model = Category
         fields = ['name']
+      

@@ -80,7 +80,7 @@ class MessagesOfTour(generics.ListAPIView):
 
         queryset = TourMessages.objects.all()
         id = self.kwargs.get('id')
-        print(queryset.filter(tour__user = id))
+
         return queryset.filter(tour__user = id)
     
     
@@ -107,4 +107,10 @@ class TourAddView(APIView):
     
 
     
-    
+class Contact(APIView):
+    def post(self,request):
+        data = request.data 
+        serializer = ContactUsSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'message':'success'})

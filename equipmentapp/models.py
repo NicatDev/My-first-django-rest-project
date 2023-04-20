@@ -19,7 +19,8 @@ class BaseMixin(models.Model):
 
 class Category(BaseMixin):
     name = models.CharField(max_length=300)
-
+    image = models.ImageField(null=True,blank=True,upload_to='productcat',verbose_name='catimage')
+    
     def __str__(self):
         return self.name or self.slug
 
@@ -38,7 +39,7 @@ class Category(BaseMixin):
 
 
 class Product(BaseMixin):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True,blank=True)
     name = models.CharField(max_length=300)
     description = models.TextField(blank=True, null=True)
     category = models.ForeignKey(

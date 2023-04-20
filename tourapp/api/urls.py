@@ -13,4 +13,8 @@ urlpatterns = [
    path('DestinationRetrieve/<id>/',views.DestinationRetrieveView.as_view(), name='DestinationRetrieveView'),
    path('tour/<id>/',views.TourListDetailView.as_view(), name='TourListView'),
    path('BookMark/',views.BookMarkView.as_view(), name='BookMarkView'),
+   path('CategoryTourView/',views.CategoryTourView.as_view(), name='CategoryTourView'),
+   path('TypeTourView/',views.TypeTourView.as_view(), name='TypeTourView'),
+
+   
 ]  
